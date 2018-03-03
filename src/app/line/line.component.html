@@ -1,0 +1,27 @@
+<!-- Child -->
+<p *ngIf="!line.lines || line.lines && !line.lines.length">
+	<button (click)="add()">add</button>
+	<button (click)="removeSelf()">remove</button>
+	{{line.title}} : 
+	<input
+		[(ngModel)]="line.time"
+		(change)="timeChanged($event)"
+		(keyup)="timeChanged($event)"
+	>
+	<input
+		[(ngModel)]="line.difficulty">
+	
+	<span>{{line.price}}</span>€
+</p>
+<!-- Parent -->
+<p *ngIf="line.lines && line.lines.length">
+	<button (click)="add()">add</button>
+	{{line.title}} : <span>{{line.price}}</span>€
+</p>
+<app-line *ngFor="let line of line.lines; let id = index"
+	[line]="line"
+	[hourlyRate]="hourlyRate"
+	[id]=id
+	(priceUpdated)="childPriceUpdated($event)"
+	(removedSelf)="removeChild($event)">
+</app-line>

@@ -1,0 +1,26 @@
+:host {
+	background: #e1e5;
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	height: 100%;
+	flex-grow: 1;
+}
+
+#json {
+	width: 30em;
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+}
+
+#json textarea {
+	flex-grow: 1;
+	height: 80vh;
+}
+
+#saisie {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+}

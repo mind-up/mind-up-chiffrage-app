@@ -1,0 +1,13 @@
+<div id="saisie">
+	<app-line *ngFor="let line of lines; let id = index"
+		[line]="line"
+		[hourlyRate]="hourlyRate"
+		[id]="id"
+		(priceUpdated)="childPriceUpdated($event)">
+	</app-line>
+	<p>Total : {{price}}€</p>
+</div>
+<div id="json">
+	<textarea [(ngModel)]="jsonStr" (change)="jsonChanged($event)"
+		(keyup)="jsonChanged($event)"></textarea>
+</div>

@@ -1,0 +1,8 @@
+:host {
+	background: #ef1;
+	display: block;
+}
+
+:host > app-line {
+	margin-left: 1em;
+}
