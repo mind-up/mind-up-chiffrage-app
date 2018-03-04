@@ -32,22 +32,80 @@ export class ChiffrageComponent implements OnInit {
 	jeh;
 	tvaRate;
 	fee;
+	title;
+	key;
+	root;
+	saved;
 
 	constructor(private http: Http) {
 		let this_ = this;
-		this.http.get("assets/default-chiffrage.json").subscribe(data => {
-			this_.json = JSON.parse((<any>data)._body);
-			this_.jsonStr = JSON.stringify(this_.json, null, 4);
-			this_.hourlyRate = this_.json['hourly-rate'];
-			this_.lines = this_.json.lines;
-		});
+		this.key = ""+(Date.now());
+		this.key = "dev";
+		this.root = 'mind-up-chiffrage';
+		this.load();
+		this.saved = false;
 	}
 
 	ngOnInit() {
 	}
+	ngAfterViewChecked() {
+	}
+
+	load() {
+		let storage = JSON.parse(localStorage.getItem(this.root));
+		if(
+			storage.chiffrages
+			&& storage.chiffrages[this.key]
+			&& Object.keys(storage.chiffrages[this.key]).length
+			&& true
+		) {
+			let length = Object.keys(storage.chiffrages[this.key]).length;
+			this.json = storage.chiffrages[this.key][length-1];
+			this.init(this);
+		} else {
+			let this_ = this;
+			this.http.get("assets/default-chiffrage.json").subscribe(data => {
+				this_.json = JSON.parse((<any>data)._body);
+				this_.init(this_);
+				this_.save();
+			});
+		}
+	}
 	
-	updateJsonStr() {
+	init(this_) {
+		this_.jsonStr = JSON.stringify(this_.json, null, 4);
+		this_.hourlyRate = this_.json['hourly-rate'];
+		this_.lines = this_.json.lines;
+		this_.title = this_.json.title;
+		this_.key = this_.json.key;
+	}
+
+	save() {
+		let storage = JSON.parse(localStorage.getItem(this.root));
+		if(!storage.chiffrages || !Object.keys(storage.chiffrages).length) {
+			console.log("no");
+			storage = {
+				chiffrages:{},
+				version:1
+			};
+		}
+		if(!storage.chiffrages[this.json.key]) {
+			storage.chiffrages[this.json.key] = {};
+		}
+
+		
+		if(!storage.chiffrages[this.json.key][0]) {
+			this.json.version = 0;
+			storage.chiffrages[this.json.key][this.json.version] = this.json;
+		} else {
+		//if(JSON.stringify(this.json) !== JSON.stringify(storage.chiffrages[this.json.key][this.json.version]) ) {
+			this.json.version += 1;
+			console.log("version", this.json.version);
+			storage.chiffrages[this.json.key][this.json.version] = this.json;
+		}
+		localStorage.setItem(this.root, JSON.stringify(storage));
 		this.jsonStr = JSON.stringify(this.json, null, 4);
+		this.saved = true;
 	}
 
 	updatePrice() {
@@ -81,6 +139,12 @@ export class ChiffrageComponent implements OnInit {
 		this.ttc = this.ht + this.tva;
 		this.tvaRate = this.json.tva;
 	}
+
+	titleChanged(event) {
+		this.json.title = event.target.value;
+		this.saved = false;
+		//this.save();
+	}
 	
 	upChild(id) {
 		if(id > 0) {
@@ -111,7 +175,8 @@ export class ChiffrageComponent implements OnInit {
 		this.lines[event.id].price = event.price;
 		this.json.lines = this.lines;
 		this.updatePrice();
-		this.updateJsonStr();
+		this.saved = false;
+		//this.save();
 	}
 	
 	jsonChanged(event) {

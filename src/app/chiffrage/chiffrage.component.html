@@ -60,7 +60,14 @@
 		</tr>
 	</table>
 	<h2>Infos</h2>
-	
+	<span>
+		<label>Titre : </label>
+		<input
+			[(ngModel)]="title"
+			(change)="titleChanged($event)"
+			(keyup)="titleChanged($event)">
+	</span>
+	<button [disabled]="saved" (click)="save()">Save</button>
 </div>
 <div id="saisie">
 	<h2>Fonctionalités</h2>

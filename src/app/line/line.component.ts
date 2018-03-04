@@ -29,7 +29,6 @@ export class LineComponent implements OnInit {
 
 	difficulties;
 	jehMax;
-	unitPrice;
 
 	constructor() {
 		console.log();
