@@ -18,9 +18,14 @@ export class ChiffrageComponent implements OnInit {
 	jsonStr;
 	json;
 	targetPrice;
-	targetManagement;
-	targetFee;
-	managementCount;
+	targetManagement: number;
+	targetFee: number;
+	managementCount: number;
+	targetHT;
+	targetTVA;
+	targetTTC;
+	managementUnitPrice;
+	difficulties;
 	tva;
 	ht;
 	ttc;
@@ -57,9 +62,9 @@ export class ChiffrageComponent implements OnInit {
 		}
 		this.targetPrice = targetPrice;
 		this.targetManagement = this.json['management-max'] * this.targetPrice;
-		this.targetManagement = (parseInt(this.targetManagement / 5))*5.0;
+		this.targetManagement = Math.trunc(this.targetManagement / 5)*5.0;
 		this.targetFee = this.json['application-fee-max'] * (this.targetPrice + this.targetManagement);
-		this.targetFee = (parseInt(this.targetFee / 5 )) * 5.0;
+		this.targetFee = Math.trunc(this.targetFee / 5 ) * 5.0;
 		this.targetHT = this.targetPrice + this.targetManagement + this.targetFee;
 		this.targetTVA = this.targetHT * this.json.tva;
 		this.targetTTC = this.targetHT + this.targetTVA;

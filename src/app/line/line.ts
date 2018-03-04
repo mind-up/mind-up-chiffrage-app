@@ -4,4 +4,6 @@ export class Line {
 	title: string;
 	lines: any;
 	price: any;
+	unitPrice;
+	jehCount;
 }

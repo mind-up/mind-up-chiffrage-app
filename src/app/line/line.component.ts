@@ -27,6 +27,10 @@ export class LineComponent implements OnInit {
 	@Output() rightedSelf = new EventEmitter<any>();
 	@Output() leftedSelf = new EventEmitter<any>();
 
+	difficulties;
+	jehMax;
+	unitPrice;
+
 	constructor() {
 		console.log();
 		this.difficulties = [
