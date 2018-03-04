@@ -6,3 +6,14 @@
 :host > app-line {
 	margin-left: 1em;
 }
+
+button {
+	border: none;
+	display: inline-flex;
+	background: none;
+}
+
+button img {
+	height: 100%;
+	width: auto;
+}

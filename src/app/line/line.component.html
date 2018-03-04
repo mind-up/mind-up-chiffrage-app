@@ -1,11 +1,11 @@
 <!-- Child -->
 <p *ngIf="!line.lines || line.lines && !line.lines.length">
-	<button (click)="add()">add</button>
-	<button (click)="removeSelf()">remove</button>
-	<button (click)="leftSelf()">left</button>
-	<button (click)="upSelf()">up</button>
-	<button (click)="downSelf()">down</button>
-	<button (click)="rightSelf()">right</button>
+	<button (click)="add()"><img src="assets/add.svg" alt="add"></button>
+	<button (click)="removeSelf()"><img src="assets/remove.svg" alt="remove"></button>
+	<button (click)="leftSelf()"><img src="assets/left.svg" alt="left"></button>
+	<button (click)="upSelf()"><img src="assets/up.svg" alt="up"></button>
+	<button (click)="downSelf()"><img src="assets/down.svg" alt="down"></button>
+	<button (click)="rightSelf()"><img src="assets/right.svg" alt="right"></button>
 	{{line.title}} :
 	<input
 		[(ngModel)]="line.time"
@@ -19,12 +19,12 @@
 </p>
 <!-- Parent -->
 <p *ngIf="line.lines && line.lines.length">
-	<button (click)="add()">add</button>
-	<button (click)="removeSelf()">remove</button>
-	<button (click)="leftSelf()">left</button>
-	<button (click)="upSelf()">up</button>
-	<button (click)="downSelf()">down</button>
-	<button (click)="rightSelf()">right</button>
+	<button (click)="add()"><img src="assets/add.svg" alt="add"></button>
+	<button (click)="removeSelf()"><img src="assets/remove.svg" alt="remove"></button>
+	<button (click)="leftSelf()"><img src="assets/left.svg" alt="left"></button>
+	<button (click)="upSelf()"><img src="assets/up.svg" alt="up"></button>
+	<button (click)="downSelf()"><img src="assets/down.svg" alt="down"></button>
+	<button (click)="rightSelf()"><img src="assets/right.svg" alt="right"></button>
 	{{line.title}} : <span>{{line.price}}</span>€
 </p>
 <app-line *ngFor="let lineChild of line.lines; let idChild = index"
