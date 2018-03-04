@@ -53,13 +53,15 @@ export class ChiffrageComponent implements OnInit {
 
 	load() {
 		let storage = JSON.parse(localStorage.getItem(this.root));
+		console.log(storage)
 		if(
-			storage.chiffrages
+			storage
+			&& storage.chiffrages
 			&& storage.chiffrages[this.key]
 			&& Object.keys(storage.chiffrages[this.key]).length
-			&& true
 		) {
 			let length = Object.keys(storage.chiffrages[this.key]).length;
+			console.log('length', length);
 			this.json = storage.chiffrages[this.key][length-1];
 			this.init(this);
 		} else {
@@ -77,12 +79,13 @@ export class ChiffrageComponent implements OnInit {
 		this_.hourlyRate = this_.json['hourly-rate'];
 		this_.lines = this_.json.lines;
 		this_.title = this_.json.title;
-		this_.key = this_.json.key;
+		this_.key = this_.json.key || this_.key;
+		this_.json.key = this_.key;
 	}
 
 	save() {
 		let storage = JSON.parse(localStorage.getItem(this.root));
-		if(!storage.chiffrages || !Object.keys(storage.chiffrages).length) {
+		if(!storage || !storage.chiffrages || !Object.keys(storage.chiffrages).length) {
 			console.log("no");
 			storage = {
 				chiffrages:{},
