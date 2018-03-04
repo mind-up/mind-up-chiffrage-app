@@ -6,7 +6,7 @@
 	<button (click)="upSelf()">up</button>
 	<button (click)="downSelf()">down</button>
 	<button (click)="rightSelf()">right</button>
-	{{line.title}} : 
+	{{line.title}} :
 	<input
 		[(ngModel)]="line.time"
 		(change)="timeChanged($event)"
@@ -27,10 +27,12 @@
 	<button (click)="rightSelf()">right</button>
 	{{line.title}} : <span>{{line.price}}</span>€
 </p>
-<app-line *ngFor="let line of line.lines; let id = index"
-	[line]="line"
+<app-line *ngFor="let lineChild of line.lines; let idChild = index"
+	[line]="lineChild"
 	[hourlyRate]="hourlyRate"
-	[id]=id
+	[id]=idChild
+	[parentLines]="line.lines"
+	[parentId]="id"
 	(priceUpdated)="childPriceUpdated($event)"
 	(removedSelf)="removeChild($event)"
 	(uppedSelf)="upChild($event)"

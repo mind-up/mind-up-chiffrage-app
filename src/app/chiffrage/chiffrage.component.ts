@@ -59,11 +59,15 @@ export class ChiffrageComponent implements OnInit {
 			this.lines[id] = tmp;
 		}
 	}
-	leftChild(id) {
-		console.log('leftChild', id)
-	}
 	rightChild(id) {
-		console.log('rightChild', id)
+		if(id > 0) {
+			let tmp = this.lines[id];
+			if(!this.lines[id-1].lines) {
+				this.lines[id-1].lines = [];
+			}
+			this.lines[id-1].lines.push(tmp);
+			this.lines.splice(id, 1);
+		}
 	}
 	
 	childPriceUpdated(event) {

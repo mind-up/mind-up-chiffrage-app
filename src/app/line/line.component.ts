@@ -1,6 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Host, Optional } from '@angular/core';
 import { Line } from './line';
 import { LineService } from '../line.service';
+import { ChiffrageComponent } from '../chiffrage/chiffrage.component';
+
+class OtherService {}
 
 @Component({
 	selector: 'app-line',
@@ -13,6 +16,9 @@ export class LineComponent implements OnInit {
 	@Input() line: Line;
 	@Input() id: number;
 	@Input() hourlyRate: number;
+	@Input() parentLine: Line;
+	@Input() parentLines: any;
+	@Input() parentId: number;
 
 	@Output() priceUpdated = new EventEmitter<any>();
 	@Output() removedSelf = new EventEmitter<any>();
@@ -22,6 +28,7 @@ export class LineComponent implements OnInit {
 	@Output() leftedSelf = new EventEmitter<any>();
 
 	constructor() {
+		console.log();
 	}
 	
 	ngOnInit() {
@@ -109,7 +116,13 @@ export class LineComponent implements OnInit {
 		}
 	}
 	leftChild(id) {
-		console.log('leftChild',id)
+		if(this.parentLines) {
+			console.log(this.parentLines, this.id);
+			let line = this.line.lines.splice(id, 1)[0];
+			console.log(line);
+			this.parentLines.splice(this.id+1, 0, line);
+		}
+		//console.log('leftChild', id, this.parentLines);
 	}
 	rightChild(id) {
 		if(id > 0) {
@@ -122,7 +135,7 @@ export class LineComponent implements OnInit {
 		}
 	}
 	childPriceUpdated(event) {
-		console.log(event)
+		//console.log(event)
 		this.line.lines[event.id].price = event.price;
 		this.updateprice();
 	}
