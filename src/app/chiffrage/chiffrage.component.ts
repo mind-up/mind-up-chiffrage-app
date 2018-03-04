@@ -17,7 +17,16 @@ export class ChiffrageComponent implements OnInit {
 	hourlyRate;
 	jsonStr;
 	json;
-	price;
+	targetPrice;
+	targetManagement;
+	targetFee;
+	managementCount;
+	tva;
+	ht;
+	ttc;
+	jeh;
+	tvaRate;
+	fee;
 
 	constructor(private http: Http) {
 		let this_ = this;
@@ -37,12 +46,35 @@ export class ChiffrageComponent implements OnInit {
 	}
 
 	updatePrice() {
-		let price = 0;
+		let targetPrice = 0;
+		let jeh = 0;
+		let ht = 0;
 		for(let k in this.lines) {
 			let line = this.lines[k];
-			price += line.price;
+			targetPrice += line.price;
+			jeh += line.jehCount;
+			ht += line.unitPrice * line.jehCount;
 		}
-		this.price = price;
+		this.targetPrice = targetPrice;
+		this.targetManagement = this.json['management-max'] * this.targetPrice;
+		this.targetManagement = (parseInt(this.targetManagement / 5))*5.0;
+		this.targetFee = this.json['application-fee-max'] * (this.targetPrice + this.targetManagement);
+		this.targetFee = (parseInt(this.targetFee / 5 )) * 5.0;
+		this.targetHT = this.targetPrice + this.targetManagement + this.targetFee;
+		this.targetTVA = this.targetHT * this.json.tva;
+		this.targetTTC = this.targetHT + this.targetTVA;
+
+		this.managementUnitPrice = this.json['jeh-max'];
+		this.managementCount = Math.max(Math.round(this.targetManagement / this.managementUnitPrice), 1.0);
+		jeh += this.managementCount;
+		ht += this.managementCount * this.managementUnitPrice;
+		this.fee = ht * this.json['application-fee-max'];
+		ht += this.fee;
+		this.jeh = jeh;
+		this.ht = ht;
+		this.tva = this.ht * this.json.tva;
+		this.ttc = this.ht + this.tva;
+		this.tvaRate = this.json.tva;
 	}
 	
 	upChild(id) {

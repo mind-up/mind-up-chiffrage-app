@@ -7,34 +7,37 @@
     "jeh-max": 400,
     "hourly-rate": 40,
     "weekly-hours": 7,
+    "tva": 0.2,
     "lines": [
         {
             "title": "Avant Projet",
             "time": "",
             "difficulty": 1,
-            "price": 0,
+            "price": 280,
             "lines": [
                 {
                     "title": "Prospection",
                     "time": "",
                     "difficulty": 1,
-                    "price": 0,
+                    "price": 280,
                     "lines": [
                         {
                             "title": "Recherche",
-                            "time": "",
-                            "difficulty": 1,
-                            "price": 0
+                            "time": "4",
+                            "difficulty": "1.25",
+                            "price": 200
                         },
                         {
                             "title": "Premiers contact",
                             "difficulty": 1,
-                            "price": 0
+                            "price": 40,
+                            "time": "1"
                         },
                         {
                             "title": "Premiers rendez-vous",
-                            "difficulty": 1,
-                            "price": 0
+                            "difficulty": "1",
+                            "price": 40,
+                            "time": "1"
                         }
                     ]
                 },
@@ -56,7 +59,7 @@
                         },
                         {
                             "title": "Initialisation du suivi",
-                            "difficulty": 1,
+                            "difficulty": "0.5",
                             "price": 0
                         },
                         {

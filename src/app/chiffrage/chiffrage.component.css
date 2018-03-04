@@ -8,10 +8,10 @@
 }
 
 #json {
-	width: 30em;
+	width: 20em;
 	height: 100%;
-	    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 #json textarea {
@@ -24,4 +24,32 @@
 	flex-direction: column;
 	flex-grow: 1;
 	overflow: auto;
+}
+td {
+	padding: 0 1em;
+}
+
+#features {
+	overflow: auto;
+}
+
+#cfr {
+	background: #ddf;
+}
+
+th {
+	background: rgb(60,120,216);
+	color: rgb(255,255,255);
+	padding: 0.25em 0.5em;
+	text-align: left;
+}
+
+.centered {
+	text-align: center;
+}
+
+table {
+	background: #fff;
+	border-collapse: collapse;
+	border-color: rgb(164, 194, 244);
 }

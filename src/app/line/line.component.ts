@@ -29,6 +29,14 @@ export class LineComponent implements OnInit {
 
 	constructor() {
 		console.log();
+		this.difficulties = [
+			{value:0.5, text:"Très simple"},
+			{value:0.75, text:"Simple"},
+			{value:1, text:"Standard"},
+			{value:1.25, text:"Difficile"},
+			{value:1.5, text:"Très difficile"},
+		]
+		this.jehMax = 400;
 	}
 	
 	ngOnInit() {
@@ -74,15 +82,19 @@ export class LineComponent implements OnInit {
 	}
 	upSelf() {
 		this.uppedSelf.next(this.id);
+		this.updateprice();
 	}
 	downSelf() {
 		this.downedSelf.next(this.id);
+		this.updateprice();
 	}
 	leftSelf() {
 		this.leftedSelf.next(this.id);
+		this.updateprice();
 	}
 	rightSelf() {
 		this.rightedSelf.next(this.id);
+		this.updateprice();
 	}
 	updateprice() {
 		if(!this.line.lines) {
@@ -98,6 +110,10 @@ export class LineComponent implements OnInit {
 		if(!this.line.price) {
 			this.line.price = 0.0;
 		}
+		if(!this.line.unitPrice) {
+			this.line.unitPrice = this.jehMax;
+		}
+		this.line.jehCount = Math.round(this.line.price / this.line.unitPrice);
 		this.priceUpdated.next({id:this.id, price:this.line.price});
 	}
 
@@ -114,6 +130,7 @@ export class LineComponent implements OnInit {
 			this.line.lines[id-1] = this.line.lines[id];
 			this.line.lines[id] = tmp;
 		}
+		this.updateprice();
 	}
 	downChild(id) {
 		if(id < this.line.lines.length-1) {
@@ -121,12 +138,17 @@ export class LineComponent implements OnInit {
 			this.line.lines[id+1] = this.line.lines[id];
 			this.line.lines[id] = tmp;
 		}
+		this.updateprice();
 	}
 	leftChild(id) {
 		if(this.parentLines) {
 			let line = this.line.lines.splice(id, 1)[0];
 			this.parentLines.splice(this.id+1, 0, line);
+			if(!this.line.lines.length) {
+				delete this.line.lines;
+			}
 		}
+		this.updateprice();
 	}
 	rightChild(id) {
 		if(id > 0) {
@@ -137,9 +159,12 @@ export class LineComponent implements OnInit {
 			this.line.lines[id-1].lines.push(tmp);
 			this.line.lines.splice(id, 1);
 		}
+		this.updateprice();
 	}
 	childPriceUpdated(event) {
-		this.line.lines[event.id].price = event.price;
+		if(this.line.lines[event.id]) {
+			this.line.lines[event.id].price = event.price;
+		}
 		this.updateprice();
 	}
 

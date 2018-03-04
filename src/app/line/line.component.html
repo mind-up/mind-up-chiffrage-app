@@ -19,14 +19,23 @@
 		(change)="timeChanged($event)"
 		(keyup)="timeChanged($event)"
 	>
+	<select name="difficulty"
+		[(ngModel)]="line.difficulty"
+		(change)="difficultyChanged($event)"
+		(keyup)="difficultyChanged($event)"
+	>
+		<option *ngFor="let difficulty of difficulties"
+			value="{{difficulty.value}}"
+		>{{difficulty.text}}</option>
+	</select>
 	<input
 		class="difficulty"
 		[(ngModel)]="line.difficulty"
 		(change)="difficultyChanged($event)"
 		(keyup)="difficultyChanged($event)"
-		>
-	<span> : </span>
-	<span>{{line.price}} €</span>
+	>
+	<!--<span> : </span>
+	<span>{{line.price}} €</span>-->
 </div>
 <!-- Parent -->
 <div class="line" *ngIf="line.lines && line.lines.length">
@@ -42,8 +51,8 @@
 		(change)="titleChanged($event)"
 		(keyup)="titleChanged($event)"
 	>
-	<span> : </span>
-	<span>{{line.price}}€</span>
+	<!--<span> : </span>
+	<span>{{line.price}}€</span>-->
 </div>
 <app-line *ngFor="let lineChild of line.lines; let idChild = index"
 	[line]="lineChild"

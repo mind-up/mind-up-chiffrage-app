@@ -1,18 +1,91 @@
+<div id="cfr">
+	<h2>Chiffrage</h2>
+	<table border="1">
+		<tr>
+			<th>Phases</th>
+			<th class="centered">Prix Unitaire HT</th>
+			<th class="centered">JEH</th>
+		</tr>
+		<tr *ngFor="let line of lines; let id = index">
+			<ng-container *ngIf="line.jehCount || 1">
+				<td>Phase {{id+1}}: {{line.title}}</td>
+				<td class="centered">{{line.unitPrice | currency:'EUR':'symbol':'1.2-2':'fr'}}</td>
+				<td class="centered">{{line.jehCount}}</td>
+			</ng-container>
+		</tr>
+		<tr>
+			<td>Gestion de projet</td>
+			<td class="centered">{{managementUnitPrice | currency:'EUR':'symbol':'1.2-2':'fr'}}</td>
+			<td class="centered">{{managementCount}}</td>
+		</tr>
+		<tr>
+			<th>Autres frais</th>
+			<th class="centered">Prix Unitaire HT</th>
+			<th class="centered">-</th>
+		</tr>
+		<tr>
+			<td>Frais de dossier</td>
+			<td class="centered">{{fee | currency:'EUR':'symbol':'1.2-2':'fr'}}</td>
+			<td class="centered">-</td>
+		</tr>
+		<tr>
+			<td>Garantie de 3 mois</td>
+			<td class="centered">Offert</td>
+			<td class="centered">-</td>
+		</tr>
+		<tr>
+			<th>Totaux</th>
+			<th class="centered">-</th>
+			<th class="centered">-</th>
+		</tr>
+		<tr>
+			<td>JEH totaux</td>
+			<td class="centered">-</td>
+			<td class="centered">{{jeh}}</td>
+		</tr>
+		<tr>
+			<td>Total HT</td>
+			<td class="centered">{{ht | currency:'EUR':'symbol':'1.2-2':'fr'}}</td>
+			<td class="centered">-</td>
+		</tr>
+		<tr>
+			<td>TVA au taux de {{tvaRate*100}}% (à titre indicatif)</td>
+			<td class="centered">{{tva | currency:'EUR':'symbol':'1.2-2':'fr'}}</td>
+			<td class="centered">-</td>
+		</tr>
+		<tr>
+			<td>Total TTC à payer (à titre indicatif)</td>
+			<td class="centered">{{ttc | currency:'EUR':'symbol':'1.2-2':'fr'}}</td>
+			<td class="centered">-</td>
+		</tr>
+	</table>
+	<h2>Infos</h2>
+	
+</div>
 <div id="saisie">
-	<app-line *ngFor="let line of lines; let id = index"
-		[line]="line"
-		[hourlyRate]="hourlyRate"
-		[id]="id"
-		[parentLines]="lines"
-		(priceUpdated)="childPriceUpdated($event)"
-		(uppedSelf)="upChild($event)"
-		(downedSelf)="downChild($event)"
-		(rightedSelf)="rightChild($event)"
-		(leftedSelf)="leftChild($event)"
-	></app-line>
-	<p>Total : {{price}}€</p>
+	<h2>Fonctionalités</h2>
+	<p>Fonctionalités : {{targetPrice | currency:'EUR':'symbol':'1.2-2':'fr'}}</p>
+	<p>Gestion de projet : {{targetManagement | currency:'EUR':'symbol':'1.2-2':'fr'}}</p>
+	<p>Frais : {{targetFee | currency:'EUR':'symbol':'1.2-2':'fr'}}</p>
+	<p>Total HT visé : {{targetHT | currency:'EUR':'symbol':'1.2-2':'fr'}}</p>
+	<p>TVA visée : {{targetTVA | currency:'EUR':'symbol':'1.2-2':'fr'}}</p>
+	<p>Total TTC visé : {{targetTTC | currency:'EUR':'symbol':'1.2-2':'fr'}}</p>
+	<div id="features">
+		<app-line *ngFor="let line of lines; let id = index"
+			[line]="line"
+			[hourlyRate]="hourlyRate"
+			[id]="id"
+			[parentLines]="lines"
+			(priceUpdated)="childPriceUpdated($event)"
+			(uppedSelf)="upChild($event)"
+			(downedSelf)="downChild($event)"
+			(rightedSelf)="rightChild($event)"
+			(leftedSelf)="leftChild($event)"
+		></app-line>
+	</div>
 </div>
 <div id="json">
+	<h2>JSON</h2>
 	<textarea [(ngModel)]="jsonStr" (change)="jsonChanged($event)"
 		(keyup)="jsonChanged($event)"></textarea>
 </div>
