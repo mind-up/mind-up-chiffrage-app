@@ -7,18 +7,23 @@
 	<button (click)="downSelf()"><img src="assets/down.svg" alt="down"></button>
 	<button (click)="rightSelf()"><img src="assets/right.svg" alt="right"></button>
 	<input
+		class="title"
 		[(ngModel)]="line.title"
 		(change)="titleChanged($event)"
 		(keyup)="titleChanged($event)"
 	>
 	<span> : </span>
 	<input
+		class="time"
 		[(ngModel)]="line.time"
 		(change)="timeChanged($event)"
 		(keyup)="timeChanged($event)"
 	>
 	<input
+		class="difficulty"
 		[(ngModel)]="line.difficulty"
+		(change)="difficultyChanged($event)"
+		(keyup)="difficultyChanged($event)"
 		>
 	<span> : </span>
 	<span>{{line.price}} €</span>
@@ -32,6 +37,7 @@
 	<button (click)="downSelf()"><img src="assets/down.svg" alt="down"></button>
 	<button (click)="rightSelf()"><img src="assets/right.svg" alt="right"></button>
 	<input
+		class="title"
 		[(ngModel)]="line.title"
 		(change)="titleChanged($event)"
 		(keyup)="titleChanged($event)"

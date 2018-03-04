@@ -39,12 +39,16 @@ export class LineComponent implements OnInit {
 		setTimeout(() => this.updateprice())
 	}
 
+	titleChanged(event) {
+		this.line.title = event.target.value;
+		this.updateprice();
+	}
 	timeChanged(event) {
 		this.line.time = event.target.value;
 		this.updateprice();
 	}
-	titleChanged(event) {
-		this.line.title = event.target.value;
+	difficultyChanged(event) {
+		this.line.difficulty = event.target.value;
 		this.updateprice();
 	}
 
@@ -120,9 +124,7 @@ export class LineComponent implements OnInit {
 	}
 	leftChild(id) {
 		if(this.parentLines) {
-			console.log(this.parentLines, this.id);
 			let line = this.line.lines.splice(id, 1)[0];
-			console.log(line);
 			this.parentLines.splice(this.id+1, 0, line);
 		}
 	}

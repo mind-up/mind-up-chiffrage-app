@@ -20,5 +20,25 @@ button img {
 
 .line {
 	display: flex;
-	align-items: center;
+	align-items: stretch;
+}
+
+.line span {
+	align-self: center;
+}
+
+input {
+	background: #fff8;
+	border: solid 1px #0004;
+	padding-left: 0.5em;
+}
+
+.title {
+	width: 20em;
+}
+.time {
+	width: 4em
+}
+.difficulty {
+	width: 4em
 }
