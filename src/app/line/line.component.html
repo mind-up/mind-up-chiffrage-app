@@ -2,6 +2,10 @@
 <p *ngIf="!line.lines || line.lines && !line.lines.length">
 	<button (click)="add()">add</button>
 	<button (click)="removeSelf()">remove</button>
+	<button (click)="leftSelf()">left</button>
+	<button (click)="upSelf()">up</button>
+	<button (click)="downSelf()">down</button>
+	<button (click)="rightSelf()">right</button>
 	{{line.title}} : 
 	<input
 		[(ngModel)]="line.time"
@@ -16,6 +20,11 @@
 <!-- Parent -->
 <p *ngIf="line.lines && line.lines.length">
 	<button (click)="add()">add</button>
+	<button (click)="removeSelf()">remove</button>
+	<button (click)="leftSelf()">left</button>
+	<button (click)="upSelf()">up</button>
+	<button (click)="downSelf()">down</button>
+	<button (click)="rightSelf()">right</button>
 	{{line.title}} : <span>{{line.price}}</span>€
 </p>
 <app-line *ngFor="let line of line.lines; let id = index"
@@ -23,5 +32,9 @@
 	[hourlyRate]="hourlyRate"
 	[id]=id
 	(priceUpdated)="childPriceUpdated($event)"
-	(removedSelf)="removeChild($event)">
-</app-line>
+	(removedSelf)="removeChild($event)"
+	(uppedSelf)="upChild($event)"
+	(downedSelf)="downChild($event)"
+	(rightedSelf)="rightChild($event)"
+	(leftedSelf)="leftChild($event)"
+></app-line>

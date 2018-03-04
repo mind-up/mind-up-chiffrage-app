@@ -16,6 +16,10 @@ export class LineComponent implements OnInit {
 
 	@Output() priceUpdated = new EventEmitter<any>();
 	@Output() removedSelf = new EventEmitter<any>();
+	@Output() uppedSelf = new EventEmitter<any>();
+	@Output() downedSelf = new EventEmitter<any>();
+	@Output() rightedSelf = new EventEmitter<any>();
+	@Output() leftedSelf = new EventEmitter<any>();
 
 	constructor() {
 	}
@@ -49,18 +53,23 @@ export class LineComponent implements OnInit {
 			difficulty: difficulty
 		});
 	}
-	
+
+	// Self
 	removeSelf() {
 		this.removedSelf.next(this.id);
 	}
-	
-	removeChild(id) {
-		this.line.lines.splice(id, 1);
-		this.line.time = '';
-		this.line.difficulty = 1;
-		this.updateprice();
+	upSelf() {
+		this.uppedSelf.next(this.id);
 	}
-
+	downSelf() {
+		this.downedSelf.next(this.id);
+	}
+	leftSelf() {
+		this.leftedSelf.next(this.id);
+	}
+	rightSelf() {
+		this.rightedSelf.next(this.id);
+	}
 	updateprice() {
 		if(!this.line.lines) {
 			this.line.price = this.line.time * this.line.difficulty * this.hourlyRate;
@@ -72,9 +81,46 @@ export class LineComponent implements OnInit {
 			}
 			this.line.price = price;
 		}
+		if(!this.line.price) {
+			this.line.price = 0.0;
+		}
 		this.priceUpdated.next({id:this.id, price:this.line.price});
 	}
-	
+
+	// Child
+	removeChild(id) {
+		this.line.lines.splice(id, 1);
+		this.line.time = '';
+		this.line.difficulty = 1;
+		this.updateprice();
+	}
+	upChild(id) {
+		if(id > 0) {
+			let tmp = Object.assign({}, this.line.lines[id-1]);
+			this.line.lines[id-1] = this.line.lines[id];
+			this.line.lines[id] = tmp;
+		}
+	}
+	downChild(id) {
+		if(id < this.line.lines.length-1) {
+			let tmp = Object.assign({}, this.line.lines[id+1]);
+			this.line.lines[id+1] = this.line.lines[id];
+			this.line.lines[id] = tmp;
+		}
+	}
+	leftChild(id) {
+		console.log('leftChild',id)
+	}
+	rightChild(id) {
+		if(id > 0) {
+			let tmp = this.line.lines[id];
+			if(!this.line.lines[id-1].lines) {
+				this.line.lines[id-1].lines = [];
+			}
+			this.line.lines[id-1].lines.push(tmp);
+			this.line.lines.splice(id, 1);
+		}
+	}
 	childPriceUpdated(event) {
 		console.log(event)
 		this.line.lines[event.id].price = event.price;

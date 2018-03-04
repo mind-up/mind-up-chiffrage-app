@@ -45,6 +45,27 @@ export class ChiffrageComponent implements OnInit {
 		this.price = price;
 	}
 	
+	upChild(id) {
+		if(id > 0) {
+			let tmp = Object.assign({}, this.lines[id-1]);
+			this.lines[id-1] = this.lines[id];
+			this.lines[id] = tmp;
+		}
+	}
+	downChild(id) {
+		if(id < this.lines.length) {
+			let tmp = Object.assign({}, this.lines[id+1]);
+			this.lines[id+1] = this.lines[id];
+			this.lines[id] = tmp;
+		}
+	}
+	leftChild(id) {
+		console.log('leftChild', id)
+	}
+	rightChild(id) {
+		console.log('rightChild', id)
+	}
+	
 	childPriceUpdated(event) {
 		this.lines[event.id].price = event.price;
 		this.json.lines = this.lines;

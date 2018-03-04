@@ -3,8 +3,12 @@
 		[line]="line"
 		[hourlyRate]="hourlyRate"
 		[id]="id"
-		(priceUpdated)="childPriceUpdated($event)">
-	</app-line>
+		(priceUpdated)="childPriceUpdated($event)"
+		(uppedSelf)="upChild($event)"
+		(downedSelf)="downChild($event)"
+		(rightedSelf)="rightChild($event)"
+		(leftedSelf)="leftChild($event)"
+	></app-line>
 	<p>Total : {{price}}€</p>
 </div>
 <div id="json">
