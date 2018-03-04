@@ -84,7 +84,7 @@ export class ChiffrageComponent implements OnInit {
 			this.hourlyRate = this.json['hourly-rate'];
 			this.lines = this.json.lines;
 		} catch(e) {
-			console.error("invalide json")
+			console.error("invalid json")
 		}
 	}
 

@@ -4,7 +4,7 @@
 }
 
 :host > app-line {
-	margin-left: 1em;
+	margin-left: 2em;
 }
 
 button {
@@ -16,4 +16,9 @@ button {
 button img {
 	height: 100%;
 	width: auto;
+}
+
+.line {
+	display: flex;
+	align-items: center;
 }

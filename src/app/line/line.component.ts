@@ -40,11 +40,14 @@ export class LineComponent implements OnInit {
 	}
 
 	timeChanged(event) {
-		console.log(event.target.value)
 		this.line.time = event.target.value;
 		this.updateprice();
 	}
-	
+	titleChanged(event) {
+		this.line.title = event.target.value;
+		this.updateprice();
+	}
+
 	add() {
 		let time;
 		let title = 'Nouvelle phase';
@@ -122,7 +125,6 @@ export class LineComponent implements OnInit {
 			console.log(line);
 			this.parentLines.splice(this.id+1, 0, line);
 		}
-		//console.log('leftChild', id, this.parentLines);
 	}
 	rightChild(id) {
 		if(id > 0) {
@@ -135,7 +137,6 @@ export class LineComponent implements OnInit {
 		}
 	}
 	childPriceUpdated(event) {
-		//console.log(event)
 		this.line.lines[event.id].price = event.price;
 		this.updateprice();
 	}
