@@ -37,6 +37,7 @@ export class ChiffrageComponent implements OnInit {
 	root;
 	saved;
 	functionality;
+	infos;
 
 	constructor(private http: Http) {
 		let this_ = this;
