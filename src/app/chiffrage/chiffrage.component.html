@@ -65,18 +65,35 @@
 		<input
 			[(ngModel)]="title"
 			(change)="titleChanged($event)"
-			(keyup)="titleChanged($event)">
+			(keyup)="titleChanged($event)"
+		>
 	</span>
 	<button [disabled]="saved" (click)="save()">Save</button>
+	<table>
+		<tr>
+			<th>Partie</th>
+			<th>Visé</th>
+			<th>Réel</th>
+			<th>Ecart</th>
+			<th>%</th>
+			<th>Maximum</th>
+			<th>Info</th>
+		</tr>
+		<tr *ngFor="let tr of infos; let id = index">
+			<td>{{tr.title}}</td>
+			<td>{{tr.target | currency:'EUR':'symbol':'1.2-2':'fr'}}</td>
+			<td>{{tr.real | currency:'EUR':'symbol':'1.2-2':'fr'}}</td>
+			<td>{{tr.real - tr.target | currency:'EUR':'symbol':'1.2-2':'fr'}}</td>
+			<td>{{(tr.real ) / tr.target | percent:'1.1'}}</td>
+			<td>{{ tr.max | currency:'EUR':'symbol':'1.2-2':'fr'}}</td>
+			<td *ngIf="tr.real > tr.max" class="warning">> max</td>
+			<td *ngIf="tr.real <= tr.max">-</td>
+		</tr>
+	</table>
+	<h3></h3>
 </div>
 <div id="saisie">
-	<h2>Fonctionalités</h2>
-	<p>Fonctionalités : {{targetPrice | currency:'EUR':'symbol':'1.2-2':'fr'}}</p>
-	<p>Gestion de projet : {{targetManagement | currency:'EUR':'symbol':'1.2-2':'fr'}}</p>
-	<p>Frais : {{targetFee | currency:'EUR':'symbol':'1.2-2':'fr'}}</p>
-	<p>Total HT visé : {{targetHT | currency:'EUR':'symbol':'1.2-2':'fr'}}</p>
-	<p>TVA visée : {{targetTVA | currency:'EUR':'symbol':'1.2-2':'fr'}}</p>
-	<p>Total TTC visé : {{targetTTC | currency:'EUR':'symbol':'1.2-2':'fr'}}</p>
+	<h2>Fonctionnalités</h2>
 	<div id="features">
 		<app-line *ngFor="let line of lines; let id = index"
 			[line]="line"

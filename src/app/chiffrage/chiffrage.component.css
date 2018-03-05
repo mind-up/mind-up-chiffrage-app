@@ -26,7 +26,7 @@
 	overflow: auto;
 }
 td {
-	padding: 0 1em;
+	padding: 0 0.5em;
 }
 
 #features {
@@ -52,4 +52,8 @@ table {
 	background: #fff;
 	border-collapse: collapse;
 	border-color: rgb(164, 194, 244);
+}
+
+.warning {
+	background: rgba(255,0,0,0.5);
 }

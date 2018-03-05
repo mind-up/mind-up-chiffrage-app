@@ -36,6 +36,7 @@ export class ChiffrageComponent implements OnInit {
 	key;
 	root;
 	saved;
+	functionality;
 
 	constructor(private http: Http) {
 		let this_ = this;
@@ -115,12 +116,15 @@ export class ChiffrageComponent implements OnInit {
 		let targetPrice = 0;
 		let jeh = 0;
 		let ht = 0;
+		let functionality = 0;
 		for(let k in this.lines) {
 			let line = this.lines[k];
 			targetPrice += line.price;
 			jeh += line.jehCount;
-			ht += line.unitPrice * line.jehCount;
+			functionality += line.unitPrice * line.jehCount;
 		}
+		ht = functionality;
+		this.functionality = functionality;
 		this.targetPrice = targetPrice;
 		this.targetManagement = this.json['management-max'] * this.targetPrice;
 		this.targetManagement = Math.trunc(this.targetManagement / 5)*5.0;
@@ -141,6 +145,35 @@ export class ChiffrageComponent implements OnInit {
 		this.tva = this.ht * this.json.tva;
 		this.ttc = this.ht + this.tva;
 		this.tvaRate = this.json.tva;
+		this.infos = [
+			{
+				title: 'Fonctionnalités',
+				target: this.targetPrice,
+				real: this.functionality
+			}, {
+				title: 'Gestion de projet',
+				target: this.targetManagement,
+				real: this.managementUnitPrice * this.managementCount,
+				max: this.functionality * this.json['management-max']
+			}, {
+				title: 'Frais',
+				target: this.targetFee,
+				real: this.fee,
+				max: this.ht * this.json['application-fee-max']
+			}, {
+				title: 'HT',
+				target: this.targetHT,
+				real: this.ht
+			}, {
+				title: 'TVA',
+				target: this.targetTVA,
+				real: this.tva
+			}, {
+				title: 'TTC',
+				target: this.targetTTC,
+				real: this.ttc
+			},
+		]
 	}
 
 	titleChanged(event) {
