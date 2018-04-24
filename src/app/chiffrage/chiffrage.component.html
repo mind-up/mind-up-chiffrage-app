@@ -1,22 +1,67 @@
 <div id="cfr">
 	<h2>Chiffrage</h2>
+	<span>
+		<label>Titre : </label>
+		<input
+			[(ngModel)]="title"
+			(change)="titleChanged($event)"
+			(keyup)="titleChanged($event)"
+		>
+		<button [disabled]="saved" (click)="save()">Save</button>
+		<button (click)="reset()">Reset</button>
+		<button (click)="applyPrice()">Apply</button>
+	</span>
 	<table border="1">
 		<tr>
 			<th>Phases</th>
 			<th class="centered">Prix Unitaire HT</th>
 			<th class="centered">JEH</th>
+			<th class="centered">PU HT manuel</th>
+			<th class="centered">JEH manuel</th>
 		</tr>
 		<tr *ngFor="let line of lines; let id = index">
 			<ng-container *ngIf="line.jehCount || 1">
 				<td>Phase {{id+1}}: {{line.title}}</td>
 				<td class="centered">{{line.unitPrice | currency:'EUR':'symbol':'1.2-2':'fr'}}</td>
 				<td class="centered">{{line.jehCount}}</td>
+				<td class="centered">
+					<input
+						type="number"
+						[(ngModel)]="line.unitPrice"
+						(change)="manualChanged($event)"
+						(keyup)="manualChanged($event)"
+					>
+				</td>
+				<td class="centered">
+					<input
+						type="number"
+						[(ngModel)]="line.jehCount"
+						(change)="manualChanged($event)"
+						(keyup)="manualChanged($event)"
+					>
+				</td>
 			</ng-container>
 		</tr>
 		<tr>
 			<td>Gestion de projet</td>
 			<td class="centered">{{managementUnitPrice | currency:'EUR':'symbol':'1.2-2':'fr'}}</td>
 			<td class="centered">{{managementCount}}</td>
+				<td class="centered">
+					<input
+						type="number"
+						[(ngModel)]="managementUnitPrice"
+						(change)="manualChanged($event)"
+						(keyup)="manualChanged($event)"
+					>
+				</td>
+				<td class="centered">
+					<input
+						type="number"
+						[(ngModel)]="managementCount"
+						(change)="manualChanged($event)"
+						(keyup)="manualChanged($event)"
+					>
+				</td>
 		</tr>
 		<tr>
 			<th>Autres frais</th>
@@ -27,6 +72,15 @@
 			<td>Frais de dossier</td>
 			<td class="centered">{{fee | currency:'EUR':'symbol':'1.2-2':'fr'}}</td>
 			<td class="centered">-</td>
+				<td class="centered">
+					<input
+						type="number"
+						[(ngModel)]="fee"
+						(change)="manualChanged($event)"
+						(keyup)="manualChanged($event)"
+					>
+				</td>
+				<td class="centered">-</td>
 		</tr>
 		<tr>
 			<td>Garantie de 3 mois</td>
@@ -60,15 +114,6 @@
 		</tr>
 	</table>
 	<h2>Infos</h2>
-	<span>
-		<label>Titre : </label>
-		<input
-			[(ngModel)]="title"
-			(change)="titleChanged($event)"
-			(keyup)="titleChanged($event)"
-		>
-	</span>
-	<button [disabled]="saved" (click)="save()">Save</button>
 	<table>
 		<tr>
 			<th>Partie</th>

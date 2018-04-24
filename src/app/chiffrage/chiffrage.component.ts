@@ -75,7 +75,7 @@ export class ChiffrageComponent implements OnInit {
 			});
 		}
 	}
-	
+
 	init(this_) {
 		this_.jsonStr = JSON.stringify(this_.json, null, 4);
 		this_.hourlyRate = this_.json['hourly-rate'];
@@ -113,7 +113,14 @@ export class ChiffrageComponent implements OnInit {
 		this.saved = true;
 	}
 
+
 	updatePrice() {
+		this.updatePrice1();
+		this.updatePrice2();
+	}
+
+
+	updatePrice1() {
 		let targetPrice = 0;
 		let jeh = 0;
 		let ht = 0;
@@ -141,6 +148,24 @@ export class ChiffrageComponent implements OnInit {
 		ht += this.managementCount * this.managementUnitPrice;
 		this.fee = ht * this.json['application-fee-max'];
 		ht += this.fee;
+	}
+
+
+	updatePrice2() {
+		let jeh = 0;
+		let ht = 0;
+		let functionality = 0;
+		for(let k in this.lines) {
+			let line = this.lines[k];
+			jeh += line.jehCount;
+			functionality += line.unitPrice * line.jehCount;
+		}
+		jeh += this.managementCount;
+		ht = functionality;
+		ht += this.managementCount * this.managementUnitPrice;
+		ht += this.fee;
+		this.functionality = functionality;
+
 		this.jeh = jeh;
 		this.ht = ht;
 		this.tva = this.ht * this.json.tva;
@@ -207,7 +232,7 @@ export class ChiffrageComponent implements OnInit {
 			this.lines.splice(id, 1);
 		}
 	}
-	
+
 	childPriceUpdated(event) {
 		this.lines[event.id].price = event.price;
 		this.json.lines = this.lines;
@@ -215,7 +240,7 @@ export class ChiffrageComponent implements OnInit {
 		this.saved = false;
 		//this.save();
 	}
-	
+
 	jsonChanged(event) {
 		try {
 			this.json = JSON.parse(event.target.value);
@@ -227,4 +252,16 @@ export class ChiffrageComponent implements OnInit {
 		}
 	}
 
+
+	manualChanged() {
+		this.updatePrice2();
+	}
+
+	reset() {
+		this.load();
+	}
+
+	applyPrice() {
+		this.updatePrice2();
+	}
 }
